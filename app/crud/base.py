@@ -1,7 +1,7 @@
 from typing import Optional
 
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import false, select
+from sqlalchemy import false, select, true
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import User
@@ -94,3 +94,14 @@ class CRUDBase:
             select(self.model).where(attr == attr_value)
         )
         return db_obj.scalars().all()
+
+    async def get_invisted(
+            self,
+            session: AsyncSession
+    ):
+        sources = await session.execute(
+            select(self.model).where(
+                self.model.fully_invested == true()
+            )
+        )
+        return sources.scalars().all()
