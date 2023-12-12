@@ -7,7 +7,7 @@ from app.core.config import settings
 SCOPES = [settings.spreadsheets, settings.drive]
 
 cred = ServiceAccountCreds(
-    scopes=SCOPES, **json.load(open(settings.credentials_file))
+    scopes=SCOPES, **json.load(open('able-winter-407512-57ef39d0cee5.json'))
 )
 
 
