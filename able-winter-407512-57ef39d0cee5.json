@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "able-winter-407512",
+  "private_key_id": "57ef39d0cee5125e83c2b3365d15cb05c6d0391d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQD4seP/adfeg7zI\n2iHE9sHixa6waJ54ohydkYPY9ZeBjjLKu/NJtHVKJzFbWSp5QoO609Gfu/FJnGOo\nWfjPmyBKz9ODnyEqs7mrxbBij1Ize2rwKZ2wv+/Tnr0WhE7i0w07VCpLc0RGdF6y\nbnYO2lzI5dnp3V+ysC9yuU2MZKfy4gepN9LQvpoUuVNvWEQtABBm8mHyD/11FI/1\nDPuoQGfd+g6jBt7TPmaoPvfBMBpU8NQiikTpa9tTzSIXhiKM69vq4asuvGgppzjF\nl26EnQpLqK6naL03DI3l4uh+66fbc/Nrlzg+GzTXqRq1tCWk4iX9lx2YdYsKjKaq\npHsbFTS1AgMBAAECggEAKUHXtWhhecZok/iOCB84mI6bdaQRgClCrog0s5JApWtJ\n9VSbXoObvqbEWyducqnscRrRSJrVA1V4ufXdH1HYmFikeg404iDpQTwdUCh/Jk/H\n9Jou0SLyXizUKS9fZ+VD6W8DyjsP3VFSYW8OUlX69RAep9vEE8CDSpi/qvYK37G4\ng7J2eWnz5uIc+a4oIuG289h5EXsJfSNq2IqYiMJklk3T5JzKOAsX/TVxPpgYlMAu\nJOLqjchoZwboETnoTkUAK2WU79dkwxnwEQWFGyTM9M4x8+z9Tm6+COwem0/WUvJZ\nXAgLsW3Kc4rcOdkoyOgNmev4cKSAs10Ed1DD1mibUQKBgQD97uOnz1IVDqQGC+/P\nv4e36bNYtcTM7ST/wONoJD7xMG/Qsh/gtW+vx1i3eMjHtZjuYYm42zWYHW+h1/7T\nLw/1FAbuRjYNy9uFDI7/HBDIDovT1mUmsz1d3zF39CYhPJkDeRF0gyL7hFejR9Af\n7CJ/fKxUn9CXy4MrhgRtRT280QKBgQD6uBYns0IX/zyfMtE+2m7+75CRF5s0w+L3\nad3in1m2YKDe/5K7D5KEjZ5A/QSziUfCULoEElVc2Yz5Rz8U05+4FzrMak86m8zE\n+iphQNbl1cnasKOtyshCiROUVXni7TmA2ndoazmXSNg4jNbHxqgOlAv1gBVVe+wd\n+Ad4nnripQKBgQD7pqdOQpOh8qRyqZm7VKB3js8B9wFV5R5ppwq2xlTqSYpGVIBq\n/OP2W6R8DuNLp5grhdYqsHNokKN0zM3pFBbIVlSYBlTDT2f5bvy3rWSkHmZMRYhw\n1ejXAr3PltHC1n79hhnaUat1fy4qzpxfRnDZzwApzUe3ZyRTGbmBYMFSQQKBgE5J\njSF4Z/r2SAet5oipzF7uj0W/CUfAou5+sDpDZ8/6/EClrTub8TRSxEemugEVrMKQ\nUoVS9DS5+bsc9CWcrxLcrg+GYpb6b0ZSl0km5fN+fjk7TuDFoSKliueWiSjCymHh\n1cdVM/Z5WIrP74ESFwf2UoWmKQM4XtI80JhpZBXBAoGAFSdPedc27EGeIB1Co0Ww\niHSppO0GNlxgCa6oz/r1NifaVTgOaY9fyxKPuLd+0gk9Ln5w8RkMIIi2sznfYRvd\npqmWdb6VhPtz6/axSQUlRH0ImpVLAr27goOwCdNSo/VH8vAYzGzLQAWFzEf32xcf\nTMHasUeqAtfaet1sZfGjl8Y=\n-----END PRIVATE KEY-----\n",
+  "client_email": "tranig-acc@able-winter-407512.iam.gserviceaccount.com",
+  "client_id": "113183543761047076307",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tranig-acc%40able-winter-407512.iam.gserviceaccount.com"
+}
