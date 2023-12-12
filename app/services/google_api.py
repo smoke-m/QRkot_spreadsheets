@@ -2,8 +2,9 @@ from datetime import datetime
 
 from aiogoogle import Aiogoogle
 
-from app.core.config import (DT_FORMAT, SHEET_COLUM_COUNT, SHEET_ID,
-                             SHEET_ROW_COUNT, SHEET_TITLE, settings)
+from app.core.config import (DT_FORMAT, INDEX_SORT, SHEET_COLUM_COUNT,
+                             SHEET_ID, SHEET_RANGE, SHEET_ROW_COUNT,
+                             SHEET_TITLE, settings)
 
 
 async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
@@ -67,7 +68,7 @@ async def spreadsheets_update_value(
             str(project.description)
         ]
         new_rows.append(new_row)
-    new_rows.sort(key=lambda x: x[1])
+    new_rows.sort(key=lambda x: x[INDEX_SORT])
     table_values.extend(new_rows)
 
     update_body = {
@@ -77,10 +78,8 @@ async def spreadsheets_update_value(
     await wrapper_services.as_service_account(
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheetid,
-            range='A1:E30',
+            range=SHEET_RANGE,
             valueInputOption='USER_ENTERED',
             json=update_body
         )
     )
-    # принт оставил спецом, очень удобно
-    print(f'https://docs.google.com/spreadsheets/d/{spreadsheetid}')
