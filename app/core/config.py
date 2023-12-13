@@ -51,7 +51,7 @@ SHEET_BODY = dict(
                 columnCount=SHEET_COLUM_COUNT,
             )))])
 
-TABLE_VALUES = table_values = [
+TABLE_VALUES = [
     ['Отчёт от', ''],
     ['Топ проектов по скорости закрытия'],
     ['Название проекта', 'Время сбора', 'Описание']
