@@ -1,7 +1,10 @@
+from typing import Tuple
+
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.charity_project import charity_project_crud
+from app.core.config import SHEET_ROW_COUNT, SHEET_COLUM_COUNT
 from app.models import CharityProject
 
 
@@ -56,3 +59,18 @@ async def check_invested(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Сумма инвистиций должна быть больше, существующей!',
         )
+
+
+async def check_range(table_values: list) -> Tuple[int, int]:
+    rows = len(table_values)
+    colums = max(len(row) for row in table_values)
+    if rows > SHEET_ROW_COUNT or colums > SHEET_COLUM_COUNT:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=(
+                f'Таблица: {SHEET_ROW_COUNT} строк, '
+                f'{SHEET_COLUM_COUNT} столбцов. '
+                f'Переданно {rows} строк, {colums} столбцов.'
+            ),
+        )
+    return rows, colums

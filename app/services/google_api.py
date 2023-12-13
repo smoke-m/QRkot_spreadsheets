@@ -2,6 +2,7 @@ from datetime import datetime
 
 from aiogoogle import Aiogoogle
 
+from app.api.validators import check_range
 from app.core.config import (DT_FORMAT, INDEX_SORT, SHEET_COLUM_COUNT,
                              SHEET_ID, SHEET_RANGE, SHEET_ROW_COUNT,
                              SHEET_TITLE, settings)
@@ -71,15 +72,19 @@ async def spreadsheets_update_value(
     new_rows.sort(key=lambda x: x[INDEX_SORT])
     table_values.extend(new_rows)
 
+    rows, colums = await check_range(table_values)
+
     update_body = {
         'majorDimension': 'ROWS',
         'values': table_values
     }
+
     await wrapper_services.as_service_account(
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheetid,
-            range=SHEET_RANGE,
+            range=SHEET_RANGE.format(rows, colums),
             valueInputOption='USER_ENTERED',
             json=update_body
         )
     )
+    print(f'https://docs.google.com/spreadsheets/d/{spreadsheetid}')
