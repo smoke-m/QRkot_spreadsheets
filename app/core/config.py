@@ -38,3 +38,21 @@ SHEET_TITLE = 'Лист1'
 SHEET_ROW_COUNT = 20
 SHEET_COLUM_COUNT = 5
 SHEET_RANGE = 'R1C1:R{}C{}'
+
+SHEET_BODY = dict(
+    properties=dict(title='', locale='ru_RU'),
+    sheets=[dict(
+        properties=dict(
+            sheetType='GRID',
+            sheetId=SHEET_ID,
+            title=SHEET_TITLE,
+            gridProperties=dict(
+                rowCount=SHEET_ROW_COUNT,
+                columnCount=SHEET_COLUM_COUNT,
+            )))])
+
+TABLE_VALUES = table_values = [
+    ['Отчёт от', ''],
+    ['Топ проектов по скорости закрытия'],
+    ['Название проекта', 'Время сбора', 'Описание']
+]

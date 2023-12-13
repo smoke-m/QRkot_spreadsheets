@@ -1,34 +1,27 @@
-from datetime import datetime
+from copy import deepcopy
+from datetime import datetime as dt
 
 from aiogoogle import Aiogoogle
 
 from app.api.validators import check_range
-from app.core.config import (DT_FORMAT, INDEX_SORT, SHEET_COLUM_COUNT,
-                             SHEET_ID, SHEET_RANGE, SHEET_ROW_COUNT,
-                             SHEET_TITLE, settings)
+from app.core.config import (DT_FORMAT, INDEX_SORT, SHEET_BODY, SHEET_RANGE,
+                             TABLE_VALUES, settings)
 
 
-async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
-    now_date_time = datetime.now().strftime(DT_FORMAT)
+async def spreadsheets_create(
+        wrapper_services: Aiogoogle,
+        sheet_body: dict = SHEET_BODY,
+) -> str:
     service = await wrapper_services.discover('sheets', 'v4')
-    spreadsheet_body = {
-        'properties': {'title': f'Отчёт от {now_date_time}',
-                       'locale': 'ru_RU'},
-        'sheets': [
-            {'properties': {'sheetType': 'GRID',
-                            'sheetId': SHEET_ID,
-                            'title': SHEET_TITLE,
-                            'gridProperties': {
-                                'rowCount': SHEET_ROW_COUNT,
-                                'columnCount': SHEET_COLUM_COUNT
-                            }}}
-        ]
-    }
+
+    spreadsheet_body = deepcopy(sheet_body)
+    spreadsheet_body['properties']['title'] = (
+        f'Отчёт от {dt.now().strftime(DT_FORMAT)}'
+    )
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
     )
-    spreadsheetid = response['spreadsheetId']
-    return spreadsheetid
+    return response['spreadsheetId']
 
 
 async def set_user_permissions(
@@ -52,14 +45,10 @@ async def spreadsheets_update_value(
         charity_projects: list,
         wrapper_services: Aiogoogle
 ) -> None:
-    now_date_time = datetime.now().strftime(DT_FORMAT)
     service = await wrapper_services.discover('sheets', 'v4')
 
-    table_values = [
-        ['Отчёт от', now_date_time],
-        ['Топ проектов по скорости закрытия'],
-        ['Название проекта', 'Время сбора', 'Описание']
-    ]
+    table_values = deepcopy(TABLE_VALUES)
+    table_values[0][1] = dt.now().strftime(DT_FORMAT)
 
     new_rows = []
     for project in charity_projects:
@@ -74,17 +63,12 @@ async def spreadsheets_update_value(
 
     rows, colums = await check_range(table_values)
 
-    update_body = {
-        'majorDimension': 'ROWS',
-        'values': table_values
-    }
-
     await wrapper_services.as_service_account(
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheetid,
             range=SHEET_RANGE.format(rows, colums),
             valueInputOption='USER_ENTERED',
-            json=update_body
-        )
-    )
-    print(f'https://docs.google.com/spreadsheets/d/{spreadsheetid}')
+            json={
+                'majorDimension': 'ROWS',
+                'values': table_values
+            }))
