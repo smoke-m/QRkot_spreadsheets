@@ -1,5 +1,6 @@
 from copy import deepcopy
 from datetime import datetime as dt
+from typing import Tuple, Union
 
 from aiogoogle import Aiogoogle
 
@@ -8,15 +9,24 @@ from app.core.config import (DT_FORMAT, INDEX_SORT, SHEET_BODY, SHEET_RANGE,
                              TABLE_VALUES, settings)
 
 
+def edit_array_value(
+        array: Union[Tuple, list, dict],
+        value: str,
+        first_key: Union[str, int, bool] = False,
+        second_key: Union[str, int, bool] = False,
+):
+    new_array = deepcopy(array)
+    new_array[first_key][second_key] = value
+    return new_array
+
+
 async def spreadsheets_create(
         wrapper_services: Aiogoogle,
-        sheet_body: dict = SHEET_BODY,
 ) -> str:
     service = await wrapper_services.discover('sheets', 'v4')
-
-    spreadsheet_body = deepcopy(sheet_body)
-    spreadsheet_body['properties']['title'] = (
-        f'Отчёт от {dt.now().strftime(DT_FORMAT)}'
+    spreadsheet_body = edit_array_value(
+        SHEET_BODY, f'Отчёт от {dt.now().strftime(DT_FORMAT)}',
+        'properties', 'title'
     )
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
@@ -46,9 +56,9 @@ async def spreadsheets_update_value(
         wrapper_services: Aiogoogle
 ) -> None:
     service = await wrapper_services.discover('sheets', 'v4')
-
-    table_values = deepcopy(TABLE_VALUES)
-    table_values[0][1] = dt.now().strftime(DT_FORMAT)
+    table_values = edit_array_value(
+        TABLE_VALUES, str(dt.now().strftime(DT_FORMAT)), 0, 1
+    )
 
     new_rows = []
     for project in charity_projects:
