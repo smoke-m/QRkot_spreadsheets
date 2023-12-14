@@ -12,11 +12,13 @@ from app.core.config import (DT_FORMAT, INDEX_SORT, SHEET_BODY, SHEET_RANGE,
 def edit_array_value(
         array: Union[Tuple, list, dict],
         value: str,
-        first_key: Union[str, int, bool] = False,
-        second_key: Union[str, int, bool] = False,
+        keys: Tuple,
 ):
     new_array = deepcopy(array)
-    new_array[first_key][second_key] = value
+    sub_array = new_array
+    for key in keys[:-1]:
+        sub_array = sub_array[key]
+    sub_array[keys[-1]] = value
     return new_array
 
 
@@ -26,7 +28,7 @@ async def spreadsheets_create(
     service = await wrapper_services.discover('sheets', 'v4')
     spreadsheet_body = edit_array_value(
         SHEET_BODY, f'Отчёт от {dt.now().strftime(DT_FORMAT)}',
-        'properties', 'title'
+        ('properties', 'title')
     )
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
@@ -57,7 +59,7 @@ async def spreadsheets_update_value(
 ) -> None:
     service = await wrapper_services.discover('sheets', 'v4')
     table_values = edit_array_value(
-        TABLE_VALUES, str(dt.now().strftime(DT_FORMAT)), 0, 1
+        TABLE_VALUES, str(dt.now().strftime(DT_FORMAT)), (0, 1)
     )
 
     new_rows = []
@@ -82,3 +84,4 @@ async def spreadsheets_update_value(
                 'majorDimension': 'ROWS',
                 'values': table_values
             }))
+    print(f'https://docs.google.com/spreadsheets/d/{spreadsheetid}')
