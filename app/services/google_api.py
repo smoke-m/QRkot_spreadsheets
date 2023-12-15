@@ -40,15 +40,14 @@ async def set_user_permissions(
         spreadsheetid: str,
         wrapper_services: Aiogoogle
 ) -> None:
-    permissions_body = {'type': 'user',
-                        'role': 'writer',
-                        'emailAddress': settings.email}
     service = await wrapper_services.discover('drive', 'v3')
     await wrapper_services.as_service_account(
         service.permissions.create(
             fileId=spreadsheetid,
-            json=permissions_body,
-            fields="id"
+            fields="id",
+            json={'type': 'user',
+                  'role': 'writer',
+                  'emailAddress': settings.email}
         ))
 
 

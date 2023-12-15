@@ -105,3 +105,7 @@ class CRUDBase:
             )
         )
         return sources.scalars().all()
+        # return sorted(
+        #     projects.scalars().all(),
+        #     key=lambda obj: obj.close_date - obj.create_date
+        # )
