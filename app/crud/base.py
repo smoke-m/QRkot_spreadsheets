@@ -42,8 +42,12 @@ class CRUDBase:
         obj_in_data = obj_in.dict()
         if user is not None:
             obj_in_data['user_id'] = user.id
-        obj_in_data['invested_amount'] = 0
+        # obj_in_data['invested_amount'] = 0  # костыль без доп записи
         target = self.model(**obj_in_data)
+        session.add(target)
+        await session.commit()                # из шемы объект без id
+        await session.refresh(target)         # пришлось добавить запись
+        # print(target.__class__.__name__)
         sources = await session.execute(
             select(cls_in).where(
                 cls_in.fully_invested == false()

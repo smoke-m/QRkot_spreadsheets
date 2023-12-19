@@ -1,3 +1,6 @@
+from app.models.donats_in_projs import DonatsInProjs
+
+
 def def_invested(target, sources):
     objects = []
     if not sources:
@@ -12,16 +15,37 @@ def def_invested(target, sources):
         if target_balance > source_nead:
             source.invested()
             target.invested_amount += source_nead
-            objects.append(source)
+            donate = DonatsInProjs()
+            donate.create(
+                target.__class__.__name__,
+                target.id,
+                source.id,
+                source_nead
+            )
+            objects.extend((donate, source))
         elif target_balance < source_nead:
             source.invested_amount += target_balance
             target.invested()
-            objects.extend((target, source))
+            donate = DonatsInProjs()
+            donate.create(
+                target.__class__.__name__,
+                target.id,
+                source.id,
+                target_balance
+            )
+            objects.extend((target, source, donate))
             return objects
         elif target_balance == source_nead:
             source.invested()
             target.invested()
-            objects.extend((target, source))
+            donate = DonatsInProjs()
+            donate.create(
+                target.__class__.__name__,
+                target.id,
+                source.id,
+                source_nead
+            )
+            objects.extend((target, source, donate))
             return objects
 
     if target not in objects:
