@@ -1,8 +1,8 @@
-"""add DonatsInProjs and new db
+"""Fir
 
-Revision ID: 4508e84bc439
+Revision ID: 63aeb1db9c06
 Revises: 
-Create Date: 2023-12-19 12:03:12.315968
+Create Date: 2023-12-20 10:54:15.813972
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4508e84bc439'
+revision = '63aeb1db9c06'
 down_revision = None
 branch_labels = None
 depends_on = None
