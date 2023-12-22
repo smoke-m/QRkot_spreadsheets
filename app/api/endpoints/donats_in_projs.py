@@ -16,8 +16,4 @@ async def get_charity_projects_in_donate(
     donation_id: int,
     session: AsyncSession = Depends(get_async_session),
 ):
-    # proj = await donation_crud.get_info_donat(donation_id, session)
-    # print(proj)
-    # for x, y in proj:
-    #     print(x, type(x), y, type(y))
     return await donation_crud.get_info_donat(donation_id, session)

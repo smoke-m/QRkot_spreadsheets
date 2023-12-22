@@ -6,8 +6,8 @@ from app.models import CharityProject, Donation, DonatsInProjs
 
 
 class CRUDDonation(CRUDBase):
+    @staticmethod
     async def get_info_donat(
-            self,
             donation_id: int,
             session: AsyncSession,
     ) -> list:
@@ -16,9 +16,9 @@ class CRUDDonation(CRUDBase):
                 DonatsInProjs.ivisted.label('donat'),
                 CharityProject.name.label('charity_project'),
             ]).where(and_(
-                Donation.id == donation_id,
-                Donation.id == DonatsInProjs.donation_id,
-                # DonatsInProjs.donation_id == donation_id,
+                # Donation.any == donation_any,
+                # Donation.id == DonatsInProjs.donation_id,
+                DonatsInProjs.donation_id == donation_id,
                 CharityProject.id == DonatsInProjs.project_id
             )))
         return projects.all()
