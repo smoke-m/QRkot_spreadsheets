@@ -10,7 +10,7 @@ from app.core.config import (DT_FORMAT, INDEX_SORT, SHEET_BODY, SHEET_RANGE,
 
 
 def edit_array_value(
-        array: Union[Tuple, list, dict],
+        array: Union[dict, list, Tuple],
         value: str,
         keys: Tuple,
 ):
