@@ -4,8 +4,10 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import false, select, true
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import User
+from app.models import CharityProject, Donation, User
 from app.services.invested import def_invested
+
+CLASSES = dict(CharityProject=CharityProject, Donation=Donation)
 
 
 class CRUDBase:
@@ -42,8 +44,12 @@ class CRUDBase:
         obj_in_data = obj_in.dict()
         if user is not None:
             obj_in_data['user_id'] = user.id
-        obj_in_data['invested_amount'] = 0
+        # obj_in_data['invested_amount'] = 0  # костыль без доп записи
         target = self.model(**obj_in_data)
+        session.add(target)
+        await session.commit()                # из шемы объект без id
+        await session.refresh(target)         # пришлось добавить доп запись
+        cls_in = CLASSES.get(cls_in)
         sources = await session.execute(
             select(cls_in).where(
                 cls_in.fully_invested == false()

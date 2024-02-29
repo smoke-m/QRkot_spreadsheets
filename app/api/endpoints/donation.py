@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import get_async_session
 from app.core.user import current_superuser, current_user
 from app.crud.donation import donation_crud
-from app.models import CharityProject, User
+from app.models import User
 from app.schemas.donation import DonationCreate, DonationDB
 
 router = APIRouter()
@@ -21,7 +21,7 @@ async def create_new_donation(
     session: AsyncSession = Depends(get_async_session),
     user: User = Depends(current_user),
 ):
-    return await donation_crud.create(donation, CharityProject, session, user)
+    return await donation_crud.create(donation, 'CharityProject', session, user)
 
 
 @router.get(
